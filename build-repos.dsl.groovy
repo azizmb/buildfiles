@@ -1,4 +1,4 @@
-githubBuildTargets = [
+def githubBuildTargets = [
   "dubizzle": [
     "terra",
   ]
@@ -16,9 +16,10 @@ githubBuildTargets.each {
             scm {
                 git {
                     remote {
-                        github("${ghUser}/${ghProject}")
+                        url("git@github.com:${ghUser}/${ghProject}")
                         refspec("+refs/tags/*:refs/remotes/origin/tags/*")
                         branch("*/tags/*")
+                        credentials("${GITHUB_CREDENTIALS_UUID}")
                     }
                 }
             }
