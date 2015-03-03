@@ -30,6 +30,26 @@ githubBuildTargets.each {
                 shell("make docker")
                 shell("make docker-push")
             }
+            configure { project ->
+                project / 'properties' << 'jenkins.plugins.hipchat.HipChatNotifier_-HipChatJobProperty' {
+                    startNotification true
+                    notifySuccess true
+                    notifyAborted true
+                    notifyNotBuilt true
+                    notifyUnstable true
+                    notifyFailure true
+                    notifyBackToNormal true
+                }
+                project / publishers << 'jenkins.plugins.hipchat.HipChatNotifier' {
+                    server "${HIPCHAT_SERVER}"
+                    authToken "${HIPCHAT_AUTH_TOKEN}"
+                    buildServerUrl "${HIPCHAT_BUILD_SERVER_URL}"
+                    room "${HIPCHAT_ROOM}"
+                    sendAs "${HIPCHAT_SEND_AS}"
+
+
+                }
+            }
         }
     }
 }
