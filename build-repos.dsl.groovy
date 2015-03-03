@@ -1,6 +1,7 @@
 def githubBuildTargets = [
   "dubizzle": [
     "terra",
+    "codi"
   ]
 ]
 
