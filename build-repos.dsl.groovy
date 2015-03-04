@@ -4,10 +4,11 @@ def githubBuildTargets = [
     "codi": [],
     "kraken": [
         "hipchat": [
-            "room": "BuildOps"
+            "room": "The Dreamers"
         ],
         "steps": [
-            "make docker_build"
+            "IMAGE_VERSION=buildops make docker_build",
+            "IMAGE_VERSION=buildops make docker_push"
         ]
     ],
   ]
@@ -27,7 +28,7 @@ githubBuildTargets.each {
 
         println "Creating job for ${ghUser} => ${ghProject}"
 
-        def hipchatRoom = ghProjectSettings["room"] ?: HIPCHAT_ROOM
+        def hipchatRoom = ghProjectSettings["hipchat"]["room"] ?: HIPCHAT_ROOM
         def buildSteps = ghProjectSettings["steps"] ?: defaultBuildSteps
 
         job {
