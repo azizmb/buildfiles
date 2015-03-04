@@ -45,6 +45,9 @@ githubBuildTargets.each {
             triggers {
                 githubPush()
             }
+            wrappers {
+                sshAgent("${GITHUB_CREDENTIALS_UUID}")
+            }
             steps {
                 buildSteps.each {
                     shell("${it}")
