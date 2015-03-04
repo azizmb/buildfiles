@@ -1,16 +1,34 @@
 def githubBuildTargets = [
   "dubizzle": [
-    "terra",
-    "codi"
+    "terra": [],
+    "codi": [],
+    "kraken": [
+        "hipchat": [
+            "room": "BuildOps"
+        ],
+        "steps": [
+            "make docker_build"
+        ]
+    ],
   ]
+]
+
+def defaultBuildSteps = [
+    "make docker",
+    "make docker-push"
 ]
 
 githubBuildTargets.each {
     def ghUser = it.key
 
     it.value.each {
-        def ghProject = it
+        def ghProject = it.key
+        def ghProjectSettings = it.value
+
         println "Creating job for ${ghUser} => ${ghProject}"
+
+        def hipchatRoom = ghProjectSettings["room"] ?: HIPCHAT_ROOM
+        def buildSteps = ghProjectSettings["steps"] ?: defaultBuildSteps
 
         job {
             name "build-${ghUser}-${ghProject}"
@@ -28,8 +46,9 @@ githubBuildTargets.each {
                 githubPush()
             }
             steps {
-                shell("make docker")
-                shell("make docker-push")
+                buildSteps.each {
+                    shell("${it}")
+                }
             }
             configure { project ->
                 project / 'properties' << 'jenkins.plugins.hipchat.HipChatNotifier_-HipChatJobProperty' {
@@ -45,7 +64,7 @@ githubBuildTargets.each {
                     server "${HIPCHAT_SERVER}"
                     authToken "${HIPCHAT_AUTH_TOKEN}"
                     buildServerUrl "${HIPCHAT_BUILD_SERVER_URL}"
-                    room "${HIPCHAT_ROOM}"
+                    room "${hipchatRoom}"
                     sendAs "${HIPCHAT_SEND_AS}"
 
 
