@@ -1,12 +1,7 @@
 def githubBuildTargets = [
   "dubizzle": [
     "terra": [],
-    "codi": [
-        "steps": [
-            "AWS_CLI_PROFILE=default make docker",
-            "make docker-push"
-        ]
-    ],
+    "codi": [],
     "kraken": [
         "hipchat": [
             "room": "The Dreamers"
