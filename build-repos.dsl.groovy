@@ -3,7 +3,8 @@ def githubBuildTargets = [
     "terra": [],
     "codi": [
         "steps": [
-            "AWS_CLI_PROFILE=default make docker"
+            "AWS_CLI_PROFILE=default make docker",
+            "make docker-push"
         ]
     ],
     "kraken": [
@@ -74,8 +75,13 @@ githubBuildTargets.each {
                     buildServerUrl "${HIPCHAT_BUILD_SERVER_URL}"
                     room "${hipchatRoom}"
                     sendAs "${HIPCHAT_SEND_AS}"
-
-
+                }
+                project / publishers << 'com.chikli.hudson.plugin.naginator.NaginatorPublisher' {
+                    rerunIfUnstable false
+                    rerunMatrixPart false
+                    maxSchedule 0
+                    checkRegexp true
+                    regexpForRerun 'Error getting container'
                 }
             }
         }
