@@ -55,7 +55,7 @@ githubBuildTargets.each {
                 }
             }
             configure { project ->
-                project / 'properties' << 'jenkins.plugins.hipchat.HipChatNotifier_-HipChatJobProperty' {
+                project / "properties" << "jenkins.plugins.hipchat.HipChatNotifier_-HipChatJobProperty" {
                     startNotification true
                     notifySuccess true
                     notifyAborted true
@@ -64,19 +64,22 @@ githubBuildTargets.each {
                     notifyFailure true
                     notifyBackToNormal true
                 }
-                project / publishers << 'jenkins.plugins.hipchat.HipChatNotifier' {
+                project / publishers << "jenkins.plugins.hipchat.HipChatNotifier" {
                     server "${HIPCHAT_SERVER}"
                     authToken "${HIPCHAT_AUTH_TOKEN}"
                     buildServerUrl "${HIPCHAT_BUILD_SERVER_URL}"
                     room "${hipchatRoom}"
                     sendAs "${HIPCHAT_SEND_AS}"
                 }
-                project / publishers << 'com.chikli.hudson.plugin.naginator.NaginatorPublisher' {
+                project / publishers << "com.chikli.hudson.plugin.naginator.NaginatorPublisher" {
                     rerunIfUnstable false
                     rerunMatrixPart false
                     maxSchedule 0
                     checkRegexp true
-                    regexpForRerun 'Error getting container'
+                    regexpForRerun "Error getting container"
+                    delay(class: "com.chikli.hudson.plugin.naginator.FixedDelay") {
+                        delay 5
+                    }
                 }
             }
         }
