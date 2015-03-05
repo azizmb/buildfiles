@@ -1,7 +1,11 @@
 def githubBuildTargets = [
   "dubizzle": [
     "terra": [],
-    "codi": [],
+    "codi": [
+        "steps": [
+            "AWS_CLI_PROFILE=default make docker"
+        ]
+    ],
     "kraken": [
         "hipchat": [
             "room": "The Dreamers"
@@ -28,8 +32,8 @@ githubBuildTargets.each {
 
         println "Creating job for ${ghUser} => ${ghProject}"
 
-        def hipchatRoom = ghProjectSettings["hipchat"]["room"] ?: HIPCHAT_ROOM
-        def buildSteps = ghProjectSettings["steps"] ?: defaultBuildSteps
+        def hipchatRoom = ghProjectSettings.hipchat?.room ?: HIPCHAT_ROOM
+        def buildSteps = ghProjectSettings.steps ?: defaultBuildSteps
 
         job {
             name "build-${ghUser}-${ghProject}"
