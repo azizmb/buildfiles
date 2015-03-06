@@ -1,6 +1,12 @@
 def githubBuildTargets = [
   "dubizzle": [
-    "terra": [],
+    "terra": [
+        "steps": [
+            "make docker",
+            "make docker-push",
+            "make beanstalk-deploy",
+        ]
+    ],
     "codi": [],
     "kraken": [
         "hipchat": [
