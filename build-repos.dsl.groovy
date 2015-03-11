@@ -3,9 +3,10 @@ def githubBuildTargets = [
     "terra": [
         "steps": [
             "make docker",
-            "make docker-push",
-            "make beanstalk-deploy",
-        ]
+            "make docker-push"
+        ],
+        "create": ["test", "production"],
+        "deploy": ["test"],
     ],
     "codi": [],
     "kraken": [
@@ -37,6 +38,9 @@ githubBuildTargets.each {
         def hipchatRoom = ghProjectSettings.hipchat?.room ?: HIPCHAT_ROOM
         def buildSteps = ghProjectSettings.steps ?: defaultBuildSteps
 
+        def createVersionEnvs = ghProjectSettings.create ?: []
+        def deployVersionEnvs = ghProjectSettings.deploy ?: []
+
         job {
             name "build-${ghUser}-${ghProject}"
             scm {
@@ -58,6 +62,18 @@ githubBuildTargets.each {
             steps {
                 buildSteps.each {
                     shell("${it}")
+                }
+
+                if (createVersionEnvs) {
+                    shell("make beanstalk-source-bundle")
+
+                    createVersionEnvs.each {
+                        shell("ebizzle create -p ${it}")
+                    }
+                }
+
+                deployVersionEnvs.each {
+                    shell("ebizzle deploy -p ${it}")
                 }
             }
             configure { project ->
