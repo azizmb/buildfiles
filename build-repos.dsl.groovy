@@ -4,7 +4,7 @@ def githubBuildTargets = [
     "dubizzle": [],
     "kraken": [
         "hipchat": [
-            "room": "BuildOps"
+            "room": "The Dreamers"
         ],
         "steps": [
             "make docker"
@@ -14,7 +14,7 @@ def githubBuildTargets = [
             "production"
         ],
         "deploy": [
-            "stage": "kraken-dev"
+            "stage": "kraken-staging"
         ]
     ],
     "terra": [
