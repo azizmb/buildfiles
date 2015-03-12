@@ -1,14 +1,7 @@
 def githubBuildTargets = [
   "dubizzle": [
-    "terra": [
-        "steps": [
-            "make docker",
-            "make docker-push"
-        ],
-        "create": ["test", "production"],
-        "deploy": ["test"],
-    ],
     "codi": [],
+    "dubizzle": [],
     "kraken": [
         "hipchat": [
             "room": "The Dreamers"
@@ -18,6 +11,14 @@ def githubBuildTargets = [
             "IMAGE_VERSION=buildops make docker_push"
         ]
     ],
+    "terra": [
+        "steps": [
+            "make docker",
+            "make docker-push"
+        ],
+        "create": ["test", "production"],
+        "deploy": ["test"],
+    ]
   ]
 ]
 
