@@ -6,7 +6,10 @@ def githubBuildTargets = [
         "hipchat": [
             "room": "BuildOps"
         ],
-        "create": ["stage", "production"]
+        "create": ["stage", "production"],
+        "deploy": [
+            "stage": "kraken-dev"
+        ]
     ],
     "terra": [
         "steps": [
@@ -14,7 +17,9 @@ def githubBuildTargets = [
             "make docker-push"
         ],
         "create": ["test", "production"],
-        "deploy": ["test"],
+        "deploy": [
+            "test": "terra"
+        ],
     ]
   ]
 ]
@@ -71,7 +76,7 @@ githubBuildTargets.each {
                 }
 
                 deployVersionEnvs.each {
-                    shell("ebizzle --profile=${it} deploy ${ghProject}")
+                    shell("ebizzle --profile=${it.key} deploy ${it.value}")
                 }
             }
             configure { project ->
