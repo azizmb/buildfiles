@@ -6,7 +6,13 @@ def githubBuildTargets = [
         "hipchat": [
             "room": "BuildOps"
         ],
-        "create": ["stage", "production"],
+        "steps": [
+            "make docker"
+        ],
+        "create": [
+            "stage",
+            "production"
+        ],
         "deploy": [
             "stage": "kraken-dev"
         ]
@@ -16,7 +22,10 @@ def githubBuildTargets = [
             "make docker",
             "make docker-push"
         ],
-        "create": ["test", "production"],
+        "create": [
+            "test",
+            "production"
+        ],
         "deploy": [
             "test": "terra"
         ],
