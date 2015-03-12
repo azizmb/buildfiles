@@ -68,12 +68,12 @@ githubBuildTargets.each {
                     shell("make beanstalk-source-bundle")
 
                     createVersionEnvs.each {
-                        shell("ebizzle create -p ${it}")
+                        shell("ebizzle --profile=${it} create ${ghProject}")
                     }
                 }
 
                 deployVersionEnvs.each {
-                    shell("ebizzle deploy -p ${it}")
+                    shell("ebizzle --profile=${it} deploy ${ghProject}")
                 }
             }
             configure { project ->
