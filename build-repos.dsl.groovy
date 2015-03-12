@@ -4,12 +4,13 @@ def githubBuildTargets = [
     "dubizzle": [],
     "kraken": [
         "hipchat": [
-            "room": "The Dreamers"
+            "room": "BuildOps"
         ],
         "steps": [
-            "IMAGE_VERSION=buildops make docker_build",
-            "IMAGE_VERSION=buildops make docker_push"
-        ]
+            "make docker_build",
+            "make docker_push"
+        ],
+        "create": ["stage", "production"]
     ],
     "terra": [
         "steps": [
