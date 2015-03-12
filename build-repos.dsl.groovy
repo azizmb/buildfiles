@@ -70,6 +70,7 @@ githubBuildTargets.each {
             }
             wrappers {
                 sshAgent("${GITHUB_CREDENTIALS_UUID}")
+                colorizeOutput("gnome-terminal")
             }
             steps {
                 buildSteps.each {
