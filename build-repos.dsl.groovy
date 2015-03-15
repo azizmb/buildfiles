@@ -45,9 +45,10 @@ githubBuildTargets.each {
         def ghProject = it.key
         def ghProjectSettings = it.value
 
-        println "Creating job for ${ghUser} => ${ghProject}"
-
         def hipchatRoom = ghProjectSettings.hipchat?.room ?: HIPCHAT_ROOM
+
+        println "${ghProject} | HipChat room => ${hipchatRoom}"
+
         def buildSteps = ghProjectSettings.steps ?: defaultBuildSteps
 
         def createVersionEnvs = ghProjectSettings.create ?: []
