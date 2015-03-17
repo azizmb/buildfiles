@@ -1,7 +1,6 @@
 def githubBuildTargets = [
   "dubizzle": [
     "codi": [],
-    "dubizzle": [],
     "kraken": [
         "hipchat": [
             "room": "The Dreamers"
