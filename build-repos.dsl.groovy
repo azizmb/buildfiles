@@ -1,5 +1,16 @@
 def githubBuildTargets = [
   "dubizzle": [
+    "dubizzle": [
+        "steps": [
+            "env",
+            "BUILD_SERVER_CONN_STRING=${BUILD_SERVER_CONN_STRING} ./docker/build_helper.sh",
+            "make docker"
+        ],
+        "create": [
+            "stage": "dubizzle-uae",
+            "production": "dubizzle-uae"
+        ]
+    ],
     "codi": [],
     "kraken": [
         "hipchat": [
@@ -9,8 +20,8 @@ def githubBuildTargets = [
             "make docker"
         ],
         "create": [
-            "stage",
-            "production"
+            "stage": "kraken",
+            "production": "kraken"
         ],
         "deploy": [
             "stage": "kraken-staging"
@@ -22,8 +33,8 @@ def githubBuildTargets = [
             "make docker-push"
         ],
         "create": [
-            "test",
-            "production"
+            "test": "terra",
+            "production": "terra"
         ],
         "deploy": [
             "test": "terra"
@@ -44,7 +55,7 @@ githubBuildTargets.each {
         def ghProject = it.key
         def ghProjectSettings = it.value
 
-        def hipchatRoom = ghProjectSettings.hipchat?.room ?: HIPCHAT_ROOM
+        def hipchatRoom = ghProjectSettings.hipchat?.room ?: "${HIPCHAT_ROOM}"
 
         println "${ghProject} | HipChat room => ${hipchatRoom}"
 
@@ -81,7 +92,7 @@ githubBuildTargets.each {
                     shell("make beanstalk-source-bundle")
 
                     createVersionEnvs.each {
-                        shell("ebizzle --profile=${it} create ${ghProject}")
+                        shell("ebizzle --profile=${it.key} create ${it.value}")
                     }
                 }
 
