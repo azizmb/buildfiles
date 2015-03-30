@@ -4,7 +4,8 @@ def githubBuildTargets = [
         "steps": [
             "env",
             "BUILD_SERVER_CONN_STRING=${BUILD_SERVER_CONN_STRING} ./docker/build_helper.sh",
-            "make docker"
+            "make docker",
+            "make docker-push"
         ],
         "create": [
             "stage": "dubizzle-uae",
