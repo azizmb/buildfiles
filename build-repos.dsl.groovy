@@ -12,6 +12,7 @@ def githubBuildTargets = [
             "production": "dubizzle-uae"
         ]
     ],
+    "fuego": [],
     "codi": [],
     "kraken": [
         "hipchat": [
