@@ -29,6 +29,18 @@ def githubBuildTargets = [
             "stage": "kraken-staging"
         ]
     ],
+    "lilith": [
+        "steps": [
+            "make docker"
+        ],
+        "create": [
+            "stage": "lilith",
+            "production": "lilith"
+        ],
+        "deploy": [
+            "stage": "lilith-staging"
+        ]
+    ],
     "terra": [
         "steps": [
             "make docker",
