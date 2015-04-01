@@ -28,8 +28,11 @@ def githubBuildTargets = [
         "deploy": [
             "stage": "kraken-staging"
         ]
-    ],
+    ],    
     "lilith": [
+        "hipchat": [
+            "room": "The Dreamers"
+        ],
         "steps": [
             "make docker"
         ],
@@ -39,6 +42,21 @@ def githubBuildTargets = [
         ],
         "deploy": [
             "stage": "lilith-staging"
+        ]
+    ],
+    "greedy": [
+        "hipchat": [
+            "room": "The Dreamers"
+        ],
+        "steps": [
+            "make docker"
+        ],
+        "create": [
+            "stage": "greedy",
+            "production": "greedy"
+        ],
+        "deploy": [
+            "stage": "greedy-staging"
         ]
     ],
     "terra": [
