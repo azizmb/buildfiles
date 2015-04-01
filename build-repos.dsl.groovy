@@ -28,7 +28,7 @@ def githubBuildTargets = [
         "deploy": [
             "stage": "kraken-staging"
         ]
-    ],    
+    ],
     "lilith": [
         "hipchat": [
             "room": "The Dreamers"
